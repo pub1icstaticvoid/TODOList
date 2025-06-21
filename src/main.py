@@ -12,19 +12,20 @@ class App(tk.Tk):
     
     def draw(self):
         self._make_menu_bar()
+        self._make_add_tab_button()
 
     def _make_menu_bar(self):
         # menu bar
         self.menubar = tk.Menu(self)
 
         # file menu in menu bar
-        filemenu = tk.Menu(self.menubar, tearoff=0)
-        filemenu.add_command(label="New", command=self.donothing)
-        filemenu.add_command(label="Open", command=self.donothing)
-        filemenu.add_command(label="Save", command=self.donothing)
-        filemenu.add_separator()
-        filemenu.add_command(label="Exit", command=self.quit)
-        self.menubar.add_cascade(label="File", menu=filemenu)
+        self.filemenu = tk.Menu(self.menubar, tearoff=0)
+        self.filemenu.add_command(label="New", command=self.donothing)
+        self.filemenu.add_command(label="Open", command=self.donothing)
+        self.filemenu.add_command(label="Save", command=self.donothing)
+        self.filemenu.add_separator()
+        self.filemenu.add_command(label="Exit", command=self.quit)
+        self.menubar.add_cascade(label="File", menu=self.filemenu)
 
         # help menu
         self.helpmenu = tk.Menu(self.menubar, tearoff=0)
@@ -34,6 +35,12 @@ class App(tk.Tk):
 
         self.config(menu=self.menubar)
 
+    def _make_add_tab_button(self):
+        add_tab_button = tk.Button(self, text="Add Tab", command=self.add_new_tab)
+        add_tab_button.place(x=720, y=450)
+
+    def add_new_tab(self):
+        pass
 
     def donothing(self):
         pass
