@@ -10,6 +10,25 @@ class App(tk.Tk):
         # self.resizable(width=0, height=0)
         self.tab_frames = []
         self.num_tabs = 1
+
+        self.grid_rowconfigure(0, weight=0)
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_columnconfigure(0, weight=1)
+
+        self.canvas = tk.Canvas(self)
+        self.scrollbar = tk.Scrollbar(self, orient="vertical", command=self.canvas.yview)
+        self.canvas.configure(yscrollcommand=self.scrollbar.set)
+
+        self.canvas.grid(row=1, column=0, sticky="nsew")
+        self.scrollbar.grid(row=1, column=1, sticky="ns")
+
+        self.tab_container = tk.Frame(self.canvas)
+        self.canvas.create_window((0, 0), window=self.tab_container, anchor="nw")
+
+        self.tab_container.bind(
+            "<Configure>",
+            lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+        )
         
         self.draw()
     
@@ -53,7 +72,7 @@ class App(tk.Tk):
         input = self.tab_name.get("1.0", "end-1c").strip()
 
         # dynamically creates new tab frame
-        tab_frame = tk.LabelFrame(self, text=input, padx=5, pady=5)
+        tab_frame = tk.LabelFrame(self.tab_container, text=input, padx=5, pady=5)
         tab_frame.grid(row=self.num_tabs, column=0, columnspan=2, padx=10, pady=10, sticky="w")
 
         delete_tab_btn = tk.Button(tab_frame, text="X", command=lambda f=tab_frame: self.delete_tab(f))
@@ -72,6 +91,9 @@ class App(tk.Tk):
     def delete_tab(self, tab_frame: tk.LabelFrame):
         tab_frame.destroy()
         self.tab_frames.remove(tab_frame)
+
+        if len(self.tab_frames) == 0:
+            self.num_tabs = 1
 
     def donothing(self):
         pass
