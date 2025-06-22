@@ -7,7 +7,7 @@ class App(tk.Tk):
         super().__init__()
         self.title("TODOList")
         self.geometry("800x500")
-        self.resizable(width=0, height=0)
+        # self.resizable(width=0, height=0)
         
         self.draw()
     
@@ -38,29 +38,24 @@ class App(tk.Tk):
 
     def _make_add_tab_button(self):
         self.buttons_frame = tk.Frame(self)
-        self.buttons_frame.grid(row=0, column=0, sticky="we")
+        self.buttons_frame.grid(row=0, column=0, sticky="w", padx=10, pady=10)
 
         self.btn_tab = tk.Button(self.buttons_frame, text="Add Tab", command=self.add_new_tab)
         self.btn_tab.grid(row=0, column=0, padx=(10), pady=10)
 
         self.tab_name = tk.Text(self, height=1, width=20)
-        self.tab_name.grid(row=0, column=1, sticky="we")
+        # self.tab_name.grid(row=0, column=1, sticky="w", padx=10, pady=10)
+        self.tab_name.place(x=110, y=23)
 
     def add_new_tab(self):
-        input = self.tab_name.get("1.0", "end-1c")
+        input = self.tab_name.get("1.0", "end-1c").strip()
 
         self.group1 = tk.LabelFrame(self, text=input, padx=5, pady=5)
-        self.group1.grid(row=1, column=0, columnspan=3, padx=10, pady=10, sticky="sewn")
-
-        self.columnconfigure(0, weight=0)
-        self.rowconfigure(1, weight=0)
-
-        self.group1.rowconfigure(0, weight=1)
-        self.group1.columnconfigure(0, weight=1)
+        self.group1.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky="w")
 
         # Create the textbox
         self.txtbox = scrolledtext.ScrolledText(self.group1, width=40, height=10)
-        self.txtbox.grid(row=0, column=0, sticky="sewn")
+        self.txtbox.grid(row=0, column=0, sticky="w")
 
     def donothing(self):
         pass
