@@ -43,12 +43,17 @@ class App(tk.Tk):
         self.btn_tab = tk.Button(self.buttons_frame, text="Add Tab", command=self.add_new_tab)
         self.btn_tab.grid(row=0, column=0, padx=(10), pady=10)
 
+        self.tab_name = tk.Text(self, height=1, width=20)
+        self.tab_name.grid(row=0, column=1, sticky="we")
+
     def add_new_tab(self):
-        self.group1 = tk.LabelFrame(self, text="Text Box", padx=5, pady=5)
+        input = self.tab_name.get("1.0", "end-1c")
+
+        self.group1 = tk.LabelFrame(self, text=input, padx=5, pady=5)
         self.group1.grid(row=1, column=0, columnspan=3, padx=10, pady=10, sticky="sewn")
 
-        self.columnconfigure(0, weight=1)
-        self.rowconfigure(1, weight=1)
+        self.columnconfigure(0, weight=0)
+        self.rowconfigure(1, weight=0)
 
         self.group1.rowconfigure(0, weight=1)
         self.group1.columnconfigure(0, weight=1)
