@@ -9,6 +9,7 @@ class App(tk.Tk):
         self.geometry("800x500")
         # self.resizable(width=0, height=0)
         self.tab_frames = []
+        self.num_tabs = 1
         
         self.draw()
     
@@ -53,7 +54,7 @@ class App(tk.Tk):
 
         # dynamically creates new tab frame
         tab_frame = tk.LabelFrame(self, text=input, padx=5, pady=5)
-        tab_frame.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky="w")
+        tab_frame.grid(row=self.num_tabs, column=0, columnspan=2, padx=10, pady=10, sticky="w")
 
         delete_tab_btn = tk.Button(tab_frame, text="X", command=lambda f=tab_frame: self.delete_tab(f))
         delete_tab_btn.grid(row=0, column=0, sticky="w")
@@ -66,6 +67,7 @@ class App(tk.Tk):
         self.tab_name.delete("1.0", tk.END)
         # stores tab frame
         self.tab_frames.append(tab_frame)
+        self.num_tabs += 1
 
     def delete_tab(self, tab_frame: tk.LabelFrame):
         tab_frame.destroy()
