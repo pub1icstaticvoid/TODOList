@@ -8,6 +8,7 @@ class App(tk.Tk):
         self.title("TODOList")
         self.geometry("800x500")
         # self.resizable(width=0, height=0)
+        self.tab_frames = []
         
         self.draw()
     
@@ -50,12 +51,25 @@ class App(tk.Tk):
     def add_new_tab(self):
         input = self.tab_name.get("1.0", "end-1c").strip()
 
-        self.group1 = tk.LabelFrame(self, text=input, padx=5, pady=5)
-        self.group1.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky="w")
+        # dynamically creates new tab frame
+        tab_frame = tk.LabelFrame(self, text=input, padx=5, pady=5)
+        tab_frame.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky="w")
+
+        delete_tab_btn = tk.Button(tab_frame, text="X", command=lambda f=tab_frame: self.delete_tab(f))
+        delete_tab_btn.grid(row=0, column=0, sticky="w")
 
         # Create the textbox
-        self.txtbox = scrolledtext.ScrolledText(self.group1, width=40, height=10)
-        self.txtbox.grid(row=0, column=0, sticky="w")
+        txtbox = scrolledtext.ScrolledText(tab_frame, width=40, height=10)
+        txtbox.grid(row=0, column=1, sticky="w", padx=10)
+
+        # clears tab name text box
+        self.tab_name.delete("1.0", tk.END)
+        # stores tab frame
+        self.tab_frames.append(tab_frame)
+
+    def delete_tab(self, tab_frame: tk.LabelFrame):
+        tab_frame.destroy()
+        self.tab_frames.remove(tab_frame)
 
     def donothing(self):
         pass
