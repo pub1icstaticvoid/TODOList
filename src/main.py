@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import scrolledtext
 
 
 class App(tk.Tk):
@@ -36,11 +37,25 @@ class App(tk.Tk):
         self.config(menu=self.menubar)
 
     def _make_add_tab_button(self):
-        add_tab_button = tk.Button(self, text="Add Tab", command=self.add_new_tab)
-        add_tab_button.place(x=720, y=450)
+        self.buttons_frame = tk.Frame(self)
+        self.buttons_frame.grid(row=0, column=0, sticky="we")
+
+        self.btn_tab = tk.Button(self.buttons_frame, text="Add Tab", command=self.add_new_tab)
+        self.btn_tab.grid(row=0, column=0, padx=(10), pady=10)
 
     def add_new_tab(self):
-        pass
+        self.group1 = tk.LabelFrame(self, text="Text Box", padx=5, pady=5)
+        self.group1.grid(row=1, column=0, columnspan=3, padx=10, pady=10, sticky="sewn")
+
+        self.columnconfigure(0, weight=1)
+        self.rowconfigure(1, weight=1)
+
+        self.group1.rowconfigure(0, weight=1)
+        self.group1.columnconfigure(0, weight=1)
+
+        # Create the textbox
+        self.txtbox = scrolledtext.ScrolledText(self.group1, width=40, height=10)
+        self.txtbox.grid(row=0, column=0, sticky="sewn")
 
     def donothing(self):
         pass
