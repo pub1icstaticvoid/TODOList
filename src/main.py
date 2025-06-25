@@ -78,7 +78,43 @@ class App(tk.Tk):
     def create_new_planner(self):
         planner_name = simpledialog.askstring("TODOList", "Enter name for planner")
         
-        return planner_name      
+        return planner_name
+
+    def create_planner(self):
+        planner_name = self.create_new_planner()
+
+        if not planner_name:
+            return
+
+        with open("planners/last_used.txt", "w") as f:
+            f.write(planner_name)
+
+        self.destroy()
+        self.__init__()
+        self.mainloop()
+
+    def get_planner_to_load(self):
+        planner_names = ""
+        with open(self.planners_json, "r") as f:
+            data = json.load(f)
+            for planner in data:
+                planner_names += planner + ", "
+        
+        planner_name = simpledialog.askstring("TODOList", "Enter name of planner to load.\nAvailable: " + planner_names[:-2])
+        
+        return planner_name
+
+    def load_new_planner(self):
+        planner_name = self.get_planner_to_load()
+
+        with open(self.planners_json, "r") as f:
+            data = json.load(f)
+            if planner_name in data:
+                with open("planners/last_used.txt", "w") as f:
+                    f.write(planner_name)
+                self.destroy()
+                self.__init__()
+                self.mainloop()
 
     def draw(self):
         self._make_menu_bar()
@@ -90,9 +126,8 @@ class App(tk.Tk):
 
         # file menu in menu bar
         self.filemenu = tk.Menu(self.menubar, tearoff=0)
-        self.filemenu.add_command(label="New", command=self.donothing)
-        self.filemenu.add_command(label="Open", command=self.donothing)
-        self.filemenu.add_command(label="Save", command=self.donothing)
+        self.filemenu.add_command(label="New", command=self.create_planner)
+        self.filemenu.add_command(label="Open", command=self.load_new_planner)
         self.filemenu.add_separator()
         self.filemenu.add_command(label="Exit", command=self.quit)
         self.menubar.add_cascade(label="File", menu=self.filemenu)

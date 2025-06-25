@@ -1,10 +1,28 @@
 {
     "a": {
         "tabs": [
-            ""
+            "bruh"
         ],
         "notes": [
-            "bruh"
+            "no way i can type notes here\n\tthat's pretty cool"
+        ]
+    },
+    "burh": {
+        "tabs": [
+            "a"
+        ],
+        "notes": [
+            "no"
+        ]
+    },
+    "lol": {
+        "tabs": [
+            "this is a tab",
+            "aaaa"
+        ],
+        "notes": [
+            "oisandfoinsdofnsefiowonfs",
+            "adfsdfdosifniosdfdn"
         ]
     }
 }
